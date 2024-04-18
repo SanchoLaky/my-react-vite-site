@@ -1,0 +1,32 @@
+.right{
+    font-size: medium;
+    float: right;
+    align-items: center;
+    display: flex;
+    gap: 0.4rem;
+    /* vertical-align: middle; */
+    /* flex-direction: column; */
+    /* justify-content: center; */
+}
+.left{
+    font-size: large;
+    float: left;
+    display: flex;
+    justify-content: center;
+    
+}
+.icon{
+    font-size: 30px;
+}
+.avatarProfile {
+    /* display: flex; */
+    /* justify-content: center; */
+    /* box-sizing: 30px; */
+    width: 30px;
+    height: 30px;
+    /* flex-direction: column; */
+    border-radius: 50%;
+    /* position:relative; */
+    /* margin-top: 16px; */
+    
+}
