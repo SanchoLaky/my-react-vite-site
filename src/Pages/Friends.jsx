@@ -62,7 +62,13 @@ const columns = [
   },
 ];
 
-const contentInformation = 
+
+
+
+
+
+export default function Friends(props) {
+  const contentInformation = 
   <>
   <form className='friends'>
     <Table className='table'
@@ -70,7 +76,7 @@ const contentInformation =
         y: '50vh',
       }} 
       columns={columns} 
-      dataSource={DataFriends} />
+      dataSource={props.friends} />
     <Space.Compact style={{ width: '70%' }}>
   {/* <Space.Compact> */}
       <Input placeholder="Введите идентификатор" />
@@ -80,16 +86,16 @@ const contentInformation =
   </>
 
 
-
-
-export default function Friends() {
   return (
+    <>{contentInformation}</>
     // <Layout>
     // <AppHeader />
-    <Layout>
-      <AppSider page = "friends"/>
-      <AppContent content = {contentInformation}/>
-    </Layout>
+
+    // <Layout>
+    //   {/* <AppSider page = "friends"/> */}
+    //   <AppContent content = {contentInformation}/>
+    // </Layout>
+    
   // </Layout>
   )
 }

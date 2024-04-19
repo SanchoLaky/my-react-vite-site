@@ -31,12 +31,15 @@ export default function AppSider(props) {
                 <ul>
                     <li className = {props.page == "transfer" ? 'selected' : ''}>
                         <Link to="/">Перевести</Link>
+                        {/* <a href='/'>Перевести</a> */}
                     </li>
                     <li className = {props.page == "history" ? 'selected' : ''}>
                         <Link to = "/history">История операций</Link>
+                        {/* <a href='/history'>История</a> */}
                     </li>
                     <li className = {props.page == "friends" ? 'selected' : ''}>
                         <Link to = "/friends">Список друзей</Link>
+                        {/* <a href='/friends'>Список</a> */}
                     </li>
                 </ul>
             </nav>

@@ -159,31 +159,35 @@ const columns = [
 
 
 
-const contentTable = 
-<form className='history'>
-<Table
-    scroll={{
-      // y: '70vh',
-    }} 
-    columns={columns} 
-    dataSource={DataHistory}
-    size="small" 
-/>
-</form>
 
 
 
 
-export default function History() {
 
+export default function History(props) {
+  const contentTable = 
+  <form className='history'>
+  <Table
+      scroll={{
+        // y: '70vh',
+      }} 
+      columns={columns} 
+      dataSource={props.history}
+      size="small" 
+  />
+  </form>
   return (
-     
+     <>{contentTable}</>
     // <Layout>
     // <AppHeader />
-    <Layout>
-      <AppSider page = "history"/>
-      <AppContent content = {contentTable}/>
-    </Layout>
+
+
+    // <Layout>
+    //   {/* <AppSider page = "history"/> */}
+    //   <AppContent content = {contentTable}/>
+    // </Layout>
+
+
   // </Layout>
   )
 }

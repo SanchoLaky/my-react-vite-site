@@ -21,17 +21,17 @@ const avatar = dataProfile.img ? <img className='avatarProfile' src={dataProfile
 
 
 
-const headerInformation = 
-<>
-<form className='left' >Название компании</form>
-<form className= 'right'>
 
-{dataProfile.recipient} ({dataProfile.identifier}) {avatar} <RightCircleOutlined className='icon'/>
-</form>
-</>
 
-export default function AppHeader() {
+export default function AppHeader(props) {
+  const headerInformation = 
+    <>
+    <form className='left' >Название компании</form>
+    <form className= 'right'>
 
+    {props.profile.recipient} ({props.profile.identifier}) {avatar} <RightCircleOutlined className='icon'/>
+    </form>
+    </>
 
 
     return(
