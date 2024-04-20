@@ -30,10 +30,27 @@ export default class App extends Component {
   }
 
   newTransfer(identifier, sum){
-    let total = ("Получатель: " + identifier + "сумма: "+ sum);
-    alert(total);
-    // alert({identifier, sum})
-    console.log({identifier, sum})
+    let totalSum = identifier.length*sum;
+    alert(totalSum);
+    if (totalSum>this.state.profile.sum)
+      alert("Недостаточно средств для перевода");
+    else{
+
+    }
+    let date = (new Date()).toLocaleDateString();
+    // let total = ("Получатель: " + identifier + " сумма: "+ sum + " дата"+ date);
+    // alert(total);
+    // // alert({identifier, sum})
+    console.log({identifier, sum,date})
+    // this.state.history.unshift(
+    //   {
+    //     key: 549,
+    //     recipient: "Новый получатель",
+    //     identifier: identifier,
+    //     date: date,
+    //     sum: sum
+    //   }
+    // )
   }
 
   render() {

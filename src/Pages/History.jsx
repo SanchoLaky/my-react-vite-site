@@ -39,9 +39,9 @@ const columns = [
   {
     title: 'Действие',
     key: 'action',
-    render: (_, record) => (
+    render: (_, records) => (
       <Space size="middle">
-        <Link to="/">Повторить</Link>
+        <Link to="/" state={{ identifier: records.identifier ,sum: records.sum}} >Повторить</Link>
         {/* <a>Повторить</a> */}
       </Space>
     ),

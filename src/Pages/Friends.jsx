@@ -57,7 +57,10 @@ const columns = [
     render: (records) => (
       <Space size="middle">
         <a>Удалить из друзей</a>
-        <Link to={{pathname: "/", state: {recipient: records.recipient} }}>Перевести</Link>
+        {/* {records.recipient} */}
+        <Link to= "/" state={{ identifier: records.identifier}} >Перевести</Link>
+        {/* <Link to={{pathname: "/", propsSearch: {recipient: records.recipient} }}>Перевести</Link> */}
+        {/* <Link to={{pathname: "/", query: records.recipient }}>Перевести</Link> */}
       </Space>
     ),
   },
