@@ -1,5 +1,3 @@
-
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Transfer from './Pages/Transfer';
 import History from './Pages/History';
@@ -28,6 +26,14 @@ export default class App extends Component {
       profile: dateProfile,
       history: dateHistory
     }
+  this.newTransfer = this.newTransfer.bind(this);
+  }
+
+  newTransfer(identifier, sum){
+    let total = ("Получатель: " + identifier + "сумма: "+ sum);
+    alert(total);
+    // alert({identifier, sum})
+    console.log({identifier, sum})
   }
 
   render() {
@@ -39,7 +45,7 @@ export default class App extends Component {
           <AppSider page =''/>
           <AppContent content =
             {<Routes>
-              <Route path="/" element={<Transfer friends = {this.state.friends} />}/>   
+              <Route path="/" element={<Transfer friends = {this.state.friends} transfer={this.newTransfer} />}/>   
               <Route path="/history" element={<History history = {this.state.history} />}/>
               <Route path="/friends" element={<Friends friends = {this.state.friends} />}/>
             </Routes>}

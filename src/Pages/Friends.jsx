@@ -13,6 +13,7 @@ import AppContent from '../components/layout/AppContent';
 import DataFriends from "../date/DateFriends.json"
 
 import '../styles/Friends.css'
+import { Link } from 'react-router-dom';
 
 
 const columns = [
@@ -53,10 +54,10 @@ const columns = [
   {
     title: 'Действие',
     key: 'action',
-    render: () => (
+    render: (records) => (
       <Space size="middle">
         <a>Удалить из друзей</a>
-        <a>Перевести</a>
+        <Link to={{pathname: "/", state: {recipient: records.recipient} }}>Перевести</Link>
       </Space>
     ),
   },
