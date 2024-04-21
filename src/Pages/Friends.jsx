@@ -16,58 +16,7 @@ import '../styles/Friends.css'
 import { Link } from 'react-router-dom';
 
 
-const columns = [
-  {
-    title: 'Аватар',
-    // dataIndex: 'img',
-    key: 'img',
-    render (_, {img}) 
-    {
-      return img ? <img className='avatar'
-      src={img}
-      /> : <SmileOutlined className='avatarIcon'/>
 
-    }
-    // (
-    //   <img
-    //   src={img}
-    //   height="30"
-    //   width="30"
-    //   />
-    // ),
-  },
-
-
-  {
-    title: 'Имя',
-    dataIndex: 'recipient',
-    key: 'recipient',
-  },
-
-  {
-    title: 'Идентификатор',
-    dataIndex: 'identifier',
-    key: 'identifier',
-  },
-
-
-  {
-    title: 'Действие',
-    key: 'action',
-    render: (records) => (
-      <Space size="middle">
-        
-        
-        {/* {records.recipient} */}
-        <Link to= "/" state={{ identifier: records.identifier}} >Перевести</Link>
-        <a>Удалить из друзей</a>
-        {/* <Button type="primary" style={{background: 'lightred'}}>Удалить из друзей</Button> */}
-        {/* <Link to={{pathname: "/", propsSearch: {recipient: records.recipient} }}>Перевести</Link> */}
-        {/* <Link to={{pathname: "/", query: records.recipient }}>Перевести</Link> */}
-      </Space>
-    ),
-  },
-];
 
 
 
@@ -75,7 +24,65 @@ const columns = [
 
 
 export default function Friends(props) {
+  const columns = [
+    {
+      title: 'Аватар',
+      // dataIndex: 'img',
+      key: 'img',
+      render (_, {img}) 
+      {
+        return img ? <img className='avatar'
+        src={img}
+        /> : <SmileOutlined className='avatarIcon'/>
+  
+      }
+      // (
+      //   <img
+      //   src={img}
+      //   height="30"
+      //   width="30"
+      //   />
+      // ),
+    },
+  
+  
+    {
+      title: 'Имя',
+      dataIndex: 'recipient',
+      key: 'recipient',
+    },
+  
+    {
+      title: 'Идентификатор',
+      dataIndex: 'identifier',
+      key: 'identifier',
+    },
+   
+    {
+      title: 'Действие',
+      key: 'action',
+      render: (records) => (
+        <Space size="middle">
+          
+          
+          {/* {records.recipient} */}
+          <Link to= "/" state={{ identifier: records.identifier}} >Перевести</Link>
+          <a onClick={()=>{props.deleteFriend(records.identifier)}}>Удалить из друзей</a>
+          {/* <Button type="primary" style={{background: 'lightred'}}>Удалить из друзей</Button> */}
+          {/* <Link to={{pathname: "/", propsSearch: {recipient: records.recipient} }}>Перевести</Link> */}
+          {/* <Link to={{pathname: "/", query: records.recipient }}>Перевести</Link> */}
+        </Space>
+      ),
+    },
+  ];
+
+
+
   const [identifier, setIdentifier] = useState('')
+  
+
+
+
   
   const addFriend = () => {
     props.addFriend(identifier)
@@ -105,6 +112,7 @@ export default function Friends(props) {
         //   setIdentifier(value)
         // }}
         onChange={onChange}
+        value={identifier}
       />
       <Button type="primary" onClick={addFriend}   style={{background: ''}}>Добавить в список друзей</Button>
     </Space.Compact>

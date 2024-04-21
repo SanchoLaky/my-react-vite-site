@@ -26,8 +26,9 @@ export default class App extends Component {
       profile: dateProfile,
       history: dateHistory
     }
-  this.newTransfer = this.newTransfer.bind(this);
-  this.addFriend = this.addFriend.bind(this);
+  this.newTransfer = this.newTransfer.bind(this)
+  this.addFriend = this.addFriend.bind(this)
+  this.deleteFriend = this.deleteFriend.bind(this)
   }
 
   newTransfer(identifiers, sum){
@@ -58,27 +59,36 @@ export default class App extends Component {
       }
       else
       {
-        let date = (new Date()).toLocaleDateString();
+        let stringRecipients =""
         for (let i = 0; i < correctRecipients.length; i++)
-        if (correctRecipients[i].identifier != this.state.profile.identifier){
-          this.state.history.unshift({
-            key: this.state.history.length + i + 1,
-            recipient: correctRecipients[i].recipient,
-            identifier: correctRecipients[i].identifier,
-            date: date,
-            sum: sum
-          });
-          this.state.profile = {
-            recipient:  this.state.profile.recipient,
-            identifier: this.state.profile.identifier,
-            img: this.state.profile.img,
-            sum: this.state.profile.sum - sum
-          }
-          this.setState({profile: this.state.profile})
-          // this.state.profile.sum = this.state.profile.sum - sum;
-          console.log(this.state.profile.sum);
-        }
-        // alert ('Средства успешно переведены')
+          stringRecipients += correctRecipients[i].recipient + '(' + correctRecipients[i].identifier + ') '
+        // const result = correctRecipients.map(Object.entries).flat(2).join('_');
+        let total = ("Вы подтверждаете перевод на общую сумму " +sum*correctRecipients.length + " следующим людям " + stringRecipients + "?");
+        let transfer = confirm(total);
+        if (transfer)
+        {
+          let date = (new Date()).toLocaleDateString();
+          for (let i = 0; i < correctRecipients.length; i++)
+            if (correctRecipients[i].identifier != this.state.profile.identifier){
+              this.state.history.unshift({
+                key: this.state.history.length + i + 1,
+                recipient: correctRecipients[i].recipient,
+                identifier: correctRecipients[i].identifier,
+                date: date,
+                sum: sum
+              });
+              this.state.profile = {
+                recipient:  this.state.profile.recipient,
+                identifier: this.state.profile.identifier,
+                img: this.state.profile.img,
+                sum: this.state.profile.sum - sum
+              }
+              this.setState({profile: this.state.profile})
+              // this.state.profile.sum = this.state.profile.sum - sum;
+              console.log(this.state.profile.sum);
+            }
+          alert ('Средства успешно переведены')
+        }else alert ('Отмена перевода')
       }
     }
     let date = (new Date()).toLocaleDateString();
@@ -115,7 +125,7 @@ export default class App extends Component {
       if (newFritnd)
       {
         for (let i = 0; i < this.state.friends.length; i++)
-          if (this.state.people[i].identifier == identifier)
+          if (this.state.friends[i].identifier == identifier)
           {
             newFritnd = null;
             break;
@@ -125,6 +135,7 @@ export default class App extends Component {
         {
           this.state.friends.unshift(newFritnd);
           this.setState({friends: this.state.friends})
+          console.log(this.state.friends)
           alert("Поздравляем! Вы добавили в свой список друзей нового человека")
         }
         else
@@ -142,6 +153,25 @@ export default class App extends Component {
     }
   }
 
+  deleteFriend(identifier)
+  {
+
+    let index = -1;
+    for (let i = 0; i < this.state.friends.length; i++)
+      if (this.state.friends[i].identifier == identifier)
+      {
+        index = i;
+        break;
+      }
+    let total = ("Вы действительно хотите удалить из друзей " + this.state.friends[index].recipient+ "(" + this.state.friends[index].identifier + ")?");
+    let deleteFriend = confirm(total);
+    if (deleteFriend)
+    {
+      this.state.friends.splice(index,1);
+      this.setState({friends: this.state.friends})
+    }
+  }
+
   render() {
     return (
       <Router>
@@ -153,7 +183,7 @@ export default class App extends Component {
             {<Routes>
               <Route path="/" element={<Transfer friends = {this.state.friends} transfer={this.newTransfer} />}/>   
               <Route path="/history" element={<History history = {this.state.history} />}/>
-              <Route path="/friends" element={<Friends friends = {this.state.friends} addFriend = {this.addFriend}/>}/>
+              <Route path="/friends" element={<Friends friends = {this.state.friends}  addFriend = {this.addFriend} deleteFriend = {this.deleteFriend}/>}/>
             </Routes>}
           />
         </Layout>
