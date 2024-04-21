@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Button, Input } from 'antd';
 import { Space, Table} from 'antd';
@@ -56,9 +56,12 @@ const columns = [
     key: 'action',
     render: (records) => (
       <Space size="middle">
-        <a>Удалить из друзей</a>
+        
+        
         {/* {records.recipient} */}
         <Link to= "/" state={{ identifier: records.identifier}} >Перевести</Link>
+        <a>Удалить из друзей</a>
+        {/* <Button type="primary" style={{background: 'lightred'}}>Удалить из друзей</Button> */}
         {/* <Link to={{pathname: "/", propsSearch: {recipient: records.recipient} }}>Перевести</Link> */}
         {/* <Link to={{pathname: "/", query: records.recipient }}>Перевести</Link> */}
       </Space>
@@ -72,6 +75,17 @@ const columns = [
 
 
 export default function Friends(props) {
+  const [identifier, setIdentifier] = useState('')
+  
+  const addFriend = () => {
+    props.addFriend(identifier)
+  }
+
+  const onChange = (e) => {
+    setIdentifier(e.target.value)
+    // this.setState({someVal: e.target.value})
+  }
+
   const contentInformation = 
   <>
   <form className='friends'>
@@ -84,15 +98,22 @@ export default function Friends(props) {
       size="small"/>
     <Space.Compact style={{ width: '70%' }}>
   {/* <Space.Compact> */}
-      <Input placeholder="Введите идентификатор" />
-      <Button type="primary">Добавить в список друзей</Button>
+      <Input 
+        onKeyDown={(e)=> e.keyCode == 13 ? e.preventDefault(): ''}
+        placeholder="Введите идентификатор" 
+        // onChange={value => {
+        //   setIdentifier(value)
+        // }}
+        onChange={onChange}
+      />
+      <Button type="primary" onClick={addFriend}   style={{background: ''}}>Добавить в список друзей</Button>
     </Space.Compact>
   </form>
   </>
 
 
   return (
-    <>{contentInformation}</>
+    <div key={props.friends}>{contentInformation}</div>
     // <Layout>
     // <AppHeader />
 

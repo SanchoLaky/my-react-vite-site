@@ -27,6 +27,7 @@ export default class App extends Component {
       history: dateHistory
     }
   this.newTransfer = this.newTransfer.bind(this);
+  this.addFriend = this.addFriend.bind(this);
   }
 
   newTransfer(identifiers, sum){
@@ -77,7 +78,7 @@ export default class App extends Component {
           // this.state.profile.sum = this.state.profile.sum - sum;
           console.log(this.state.profile.sum);
         }
-        alert ('Средства успешно переведены')
+        // alert ('Средства успешно переведены')
       }
     }
     let date = (new Date()).toLocaleDateString();
@@ -96,6 +97,51 @@ export default class App extends Component {
     // )
   }
 
+  addFriend(identifier){
+    // alert(identifier)
+    console.log(identifier)
+    if (identifier == this.state.profile.identifier)
+      alert("Нельзя добавить в список друзей самого себя")
+    else
+    {
+      let newFritnd = null
+      for (let i = 0; i < this.state.people.length; i++)
+        if (this.state.people[i].identifier == identifier)
+        {
+          newFritnd = this.state.people[i];
+          break;
+        }
+      console.log(newFritnd);
+      if (newFritnd)
+      {
+        for (let i = 0; i < this.state.friends.length; i++)
+          if (this.state.people[i].identifier == identifier)
+          {
+            newFritnd = null;
+            break;
+          }
+        console.log(newFritnd);
+        if (newFritnd)
+        {
+          this.state.friends.unshift(newFritnd);
+          this.setState({friends: this.state.friends})
+          alert("Поздравляем! Вы добавили в свой список друзей нового человека")
+        }
+        else
+        {
+          let total = ("Внимание! Человек с идентификатором " + identifier+ " уже добавлен к вам в друзья");
+          alert(total)
+        }
+      }
+      else
+      {
+        let total = ("Ошибка! Идентификатор " + identifier+ " НЕ НАЙДЕН!");
+        alert(total)
+      }
+
+    }
+  }
+
   render() {
     return (
       <Router>
@@ -107,7 +153,7 @@ export default class App extends Component {
             {<Routes>
               <Route path="/" element={<Transfer friends = {this.state.friends} transfer={this.newTransfer} />}/>   
               <Route path="/history" element={<History history = {this.state.history} />}/>
-              <Route path="/friends" element={<Friends friends = {this.state.friends} />}/>
+              <Route path="/friends" element={<Friends friends = {this.state.friends} addFriend = {this.addFriend}/>}/>
             </Routes>}
           />
         </Layout>
