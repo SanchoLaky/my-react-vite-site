@@ -51,7 +51,7 @@ export default function Transfer(props) {
                  label : item.recipient + '(' +  item.identifier + ')'
                }; 
              }))
-  const [identifier, setIdentifier] = useState(state ? (state.identifier? (state.identifier) : null) : null)
+  const [identifier, setIdentifier] = useState(state ? (state.identifier? [state.identifier] : null) : null)
   const [sum, setSum] = useState(state ? (state.sum? (state.sum) : 0) : 0)
 
   const onFinish = () => {

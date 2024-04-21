@@ -29,19 +29,62 @@ export default class App extends Component {
   this.newTransfer = this.newTransfer.bind(this);
   }
 
-  newTransfer(identifier, sum){
-    let totalSum = identifier.length*sum;
+  newTransfer(identifiers, sum){
+    let totalSum = identifiers.length*sum;
     alert(totalSum);
     if (totalSum>this.state.profile.sum)
       alert("Недостаточно средств для перевода");
     else{
-
+      var correctRecipients = [];
+      var errorRecipients = [];
+      for (let i = 0; i < identifiers.length; i++) {
+        for (let j = 0; j < this.state.people.length; j++)
+          if (this.state.people[j].identifier == identifiers[i]){
+            correctRecipients.push({
+              recipient: this.state.people[j].recipient,
+              identifier: identifiers[i]
+            })
+            break;
+          }
+        if (correctRecipients.length!= i+1)
+          errorRecipients.push(identifiers[i])
+      }
+      console.log({correctRecipients, errorRecipients})
+      if (errorRecipients.length>0)
+      {
+        let total = ("Ошибка! Следующие идентификаторы не найдены в системе: " + errorRecipients);
+        alert(total);
+      }
+      else
+      {
+        let date = (new Date()).toLocaleDateString();
+        for (let i = 0; i < correctRecipients.length; i++)
+        if (correctRecipients[i].identifier != this.state.profile.identifier){
+          this.state.history.unshift({
+            key: this.state.history.length + i + 1,
+            recipient: correctRecipients[i].recipient,
+            identifier: correctRecipients[i].identifier,
+            date: date,
+            sum: sum
+          });
+          this.state.profile = {
+            recipient:  this.state.profile.recipient,
+            identifier: this.state.profile.identifier,
+            img: this.state.profile.img,
+            sum: this.state.profile.sum - sum
+          }
+          this.setState({profile: this.state.profile})
+          // this.state.profile.sum = this.state.profile.sum - sum;
+          console.log(this.state.profile.sum);
+        }
+        alert ('Средства успешно переведены')
+      }
     }
     let date = (new Date()).toLocaleDateString();
     // let total = ("Получатель: " + identifier + " сумма: "+ sum + " дата"+ date);
     // alert(total);
     // // alert({identifier, sum})
-    console.log({identifier, sum,date})
+    console.log({identifiers, sum,date})
     // this.state.history.unshift(
     //   {
     //     key: 549,
@@ -59,7 +102,7 @@ export default class App extends Component {
       <Layout>
         <AppHeader profile = {this.state.profile} />
         <Layout>
-          <AppSider page =''/>
+          <AppSider page ={''} sum = {this.state.profile.sum}/>
           <AppContent content =
             {<Routes>
               <Route path="/" element={<Transfer friends = {this.state.friends} transfer={this.newTransfer} />}/>   

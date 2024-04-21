@@ -22,7 +22,7 @@ export default function AppSider(props) {
         <>
         <Layout.Sider width="25%" style={siderStyle}>
         <form className='sider'>
-        <p className='sum'>{dataProfile.sum.toFixed(2)}</p>
+        <p className='sum'>{props.sum.toFixed(2)}</p>
         <p>Остаток средств</p>
         </form>
 
