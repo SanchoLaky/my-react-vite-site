@@ -80,11 +80,12 @@ export default function Friends(props) {
         y: '50vh',
       }} 
       columns={columns} 
-      dataSource={props.friends} />
+      dataSource={props.friends} 
+      size="small"/>
     <Space.Compact style={{ width: '70%' }}>
   {/* <Space.Compact> */}
       <Input placeholder="Введите идентификатор" />
-      <Button type="primary">Найти друга</Button>
+      <Button type="primary">Добавить в список друзей</Button>
     </Space.Compact>
   </form>
   </>

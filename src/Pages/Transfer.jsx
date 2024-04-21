@@ -27,6 +27,20 @@ const formStyle = {
   border: 'solid 1px lightgrey',
   borderRadius: "15px",
   padding: '1rem' ,
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  // top:"50%",
+  // left: 'auto',
+  // right: 'auto',
+  // position:'absolute',
+  // align: "middle"
+  marginTop: '10%',
+  // marginBottom: '50%',
+  // display: 'flex',
+  // justifyContent: "center"
+  // justify: "center",
+  // top: "200px",
+
 };
 
 
@@ -60,7 +74,7 @@ export default function Transfer(props) {
       if (sum)
         props.transfer(identifier, sum)
       else
-      alert("Введите Сумму!")
+      alert("Введите cумму!")
     else
       alert("Выберите получателя!")
       // this.props.transfer(this.state.identifier, this.state.sum)
@@ -80,6 +94,7 @@ export default function Transfer(props) {
         // form={form}
         onFinish={onFinish}
         layout="vertical"
+        
         style = {formStyle}
 
         // autoComplete="off"
@@ -97,7 +112,7 @@ export default function Transfer(props) {
             onChange={value => {
               setIdentifier(value)
             }}
-            placeholder="Выберите получателя" 
+            placeholder="Выберите из списка или введите идентификатор" 
             options={listFriends} 
             style={{width: '100%'}}
             // defaultValue={identifier}  

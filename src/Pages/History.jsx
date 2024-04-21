@@ -169,7 +169,7 @@ export default function History(props) {
   <form className='history'>
   <Table
       scroll={{
-        // y: '70vh',
+         y: '70vh',
       }} 
       columns={columns} 
       dataSource={props.history}

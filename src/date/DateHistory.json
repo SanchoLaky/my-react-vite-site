@@ -1,172 +1,58 @@
 [
     {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.70
+        "key": "8",
+        "recipient": "Browniou",
+        "identifier": "60",
+        "date": "01.01.2024",
+        "sum": 2500
+    },
+    {
+        "key": "7",
+        "recipient": "Browpotn",
+        "identifier": "53",
+        "date": "22.12.2023",
+        "sum": 1500
+    },
+    {
+        "key": "6",
+        "recipient": "Jrown",
+        "identifier": "40",
+        "date": "22.02.2020",
+        "sum": 15500
+    },
+    {
+        "key": "5",
+        "recipient": "Jwno",
+        "identifier": "67",
+        "date": "26.05.2016",
+        "sum": 1500
+    },
+    {
+        "key": "4",
+        "recipient": "Brown",
+        "identifier": "89",
+        "date": "22.02.2016",
+        "sum": 1000
+    },
+    {
+        "key": "3",
+        "recipient": "JohBrown",
+        "identifier": "28",
+        "date": "22.05.2013",
+        "sum": 300
+    },
+    {
+        "key": "2",
+        "recipient": "Joown",
+        "identifier": "50",
+        "date": "19.02.2006",
+        "sum": 750
     },
     {
         "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
+        "recipient": "Jon",
+        "identifier": "16",
         "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    
-
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.70
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.70
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.70
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.70
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.70
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
-    },
-    {
-        "key": "1",
-        "recipient": "John Brown",
-        "identifier": "34347384738",
-        "date": "22.02.2003",
-        "sum": 1000.00
+        "sum": 500
     }
 ]

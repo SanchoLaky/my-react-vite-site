@@ -31,7 +31,7 @@ export default class App extends Component {
 
   newTransfer(identifiers, sum){
     let totalSum = identifiers.length*sum;
-    alert(totalSum);
+    // alert(totalSum);
     if (totalSum>this.state.profile.sum)
       alert("Недостаточно средств для перевода");
     else{
