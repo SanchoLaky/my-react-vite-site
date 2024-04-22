@@ -1,4 +1,5 @@
-import { Layout, Form} from 'antd';
+import { Layout } from 'antd';
+import { SmileOutlined, RightCircleOutlined } from '@ant-design/icons';
 
 import "../../styles/AppHeader.css"
 
@@ -7,36 +8,17 @@ const headerStyle = {
   color: '#fff',
   height: 56,
   paddingInline: 10,
-//   lineHeight: '56px',
   backgroundColor: '#030852',
 };
 
-import dataProfile from '../../date/DateProfile.json'
-
-import { SmileOutlined} from '@ant-design/icons';
-import { RightCircleOutlined} from '@ant-design/icons';
-
-const avatar = dataProfile.img ? <img className='avatarProfile' src={dataProfile.img}/> : <SmileOutlined className='icon'/>
-
-
-
-
-
-
 export default function AppHeader(props) {
-  const headerInformation = 
-    <>
-    <form className='left' >Название компании</form>
-    <form className= 'right'>
-
-    {props.profile.recipient} ({props.profile.identifier}) {avatar} <RightCircleOutlined className='icon'/>
-    </form>
-    </>
-
-
+  const avatar = props.profile.img ? <img className='avatarProfile' src={props.profile.img}/> : <SmileOutlined className='icon'/>
     return(
         <Layout.Header style={headerStyle}>
-            {headerInformation}
+          <form className='left' >Название компании</form>
+          <form className= 'right'>
+            {props.profile.recipient} ({props.profile.identifier}) {avatar} <RightCircleOutlined className='icon'/>
+          </form>
         </Layout.Header>
     )
 }

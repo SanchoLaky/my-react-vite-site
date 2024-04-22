@@ -2,7 +2,6 @@
     height:  50%;
     display: flex;
     justify-content: center;
-    /* vertical-align: middle; */
     flex-direction: column;
 }
 .menu{
@@ -10,12 +9,7 @@
     
 }
 .sum{
-    /* font-size: absolute-size; */
-    /* font-size: adjust; */
-    /* content: ""; */
-    /* display: inline-block; */
     font-size: xx-large;
-    /* font-size-adjust:inherit ; */
 }
 
 .selected{

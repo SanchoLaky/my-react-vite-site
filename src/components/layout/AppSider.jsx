@@ -1,59 +1,37 @@
 import { Layout } from 'antd';
-//import { Link } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Routes, Link, Outlet} from "react-router-dom";
-
-import Transfer from '../../Pages/Transfer';
-import History from '../../Pages/History';
-import Friends from '../../Pages/Friends';
+import { Link, useLocation } from 'react-router-dom';
 
 import '../../styles/AppSider.css'
 
-import dataProfile from '../../date/DateProfile.json'
-
 const siderStyle = {
     textAlign: 'center',
-    // lineHeight: '120px',
     color: '#23336D',
     backgroundColor: '#F0F5FF',
   };
 
 export default function AppSider(props) {
+    let location = useLocation();
     return(
-        <>
-        <Layout.Sider width="25%" style={siderStyle}>
-        <form className='sider'>
-        <p className='sum'>{props.sum.toFixed(2)}</p>
-        <p>Остаток средств</p>
-        </form>
-
-        <form className='sider menu'>
-            <nav>
-                <ul>
-                    <li className = {props.page == "transfer" ? 'selected' : ''}>
-                        <Link to="/">Перевести</Link>
-                        {/* <a href='/'>Перевести</a> */}
-                    </li>
-                    <li className = {props.page == "history" ? 'selected' : ''}>
-                        <Link to = "/history">История операций</Link>
-                        {/* <a href='/history'>История</a> */}
-                    </li>
-                    <li className = {props.page == "friends" ? 'selected' : ''}>
-                        <Link to = "/friends">Список друзей</Link>
-                        {/* <a href='/friends'>Список</a> */}
-                    </li>
-                </ul>
-            </nav>
-        </form>
+        <Layout.Sider width="25%" style={siderStyle} >
+            <form className='sider'>
+            <p className='sum'>{props.sum.toFixed(2)}</p>
+            <p>Остаток средств</p>
+            </form>
+            <form className='sider menu'>
+                <nav>
+                    <ul>
+                        <li className = {location.pathname == "/" ? 'selected' : ''}>
+                            <Link to="/" >Перевести</Link>
+                        </li>
+                        <li className = {location.pathname == "/history" ? 'selected' : ''}>
+                            <Link to = "/history">История операций</Link>
+                        </li>
+                        <li className = {location.pathname == "/friends" ? 'selected' : ''}>
+                            <Link to = "/friends">Список друзей</Link>
+                        </li>
+                    </ul>
+                </nav>
+            </form>
         </Layout.Sider>
-        {/* <Router>
-             <Routes>
-                 <Route path="/" element={<Transfer/>}/>   
-                 <Route path="/history" element={<History/>}/>
-                 <Route path="/friends" element={<Friends/>}/>
-             </Routes>
-        </Router> */}
-        </>
-        
-    )
-    
+    ) 
 }

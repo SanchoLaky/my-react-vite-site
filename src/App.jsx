@@ -24,7 +24,8 @@ export default class App extends Component {
       friends: dateFriends,
       people: datePeople,
       profile: dateProfile,
-      history: dateHistory
+      history: dateHistory,
+      page: window.location.pathname
     }
   this.newTransfer = this.newTransfer.bind(this)
   this.addFriend = this.addFriend.bind(this)
@@ -178,7 +179,7 @@ export default class App extends Component {
       <Layout>
         <AppHeader profile = {this.state.profile} />
         <Layout>
-          <AppSider page ={''} sum = {this.state.profile.sum}/>
+          <AppSider page ={this.state.page} sum = {this.state.profile.sum} />
           <AppContent content =
             {<Routes>
               <Route path="/" element={<Transfer friends = {this.state.friends} transfer={this.newTransfer} />}/>   

@@ -6,12 +6,6 @@ const contentStyle = {
     color: '#000',
     backgroundColor: '#fff',
     padding: '1rem' ,
-    // display: 'block',
-    // marginLeft: 'auto',
-    // marginRight: 'auto',
-    // type:"flex" ,
-    // justify: "center" ,
-    // align: "middle"
   };
 
 export default function AppContent(props) {

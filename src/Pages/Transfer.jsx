@@ -1,26 +1,8 @@
-// import React from 'react'
-
-import { Layout } from 'antd';
-import AppHeader from '../components/layout/AppHeader';
-import AppSider from '../components/layout/AppSider';
-import AppContent from '../components/layout/AppContent';
-
-import { Button, Input, Select, Space,Form,InputNumber } from 'antd';
+import React, { useState } from 'react'
 
 import { useLocation } from 'react-router-dom'
 
-// const [form] = Form.useForm();
-
-const options = [
-  {
-    value: 'zhejiang',
-    label: 'Zhejiang',
-  },
-  {
-    value: 'jiangsu',
-    label: 'Jiangsu',
-  },
-];
+import { Button, Select, Space, Form, InputNumber } from 'antd';
 
 const formStyle = {
   width: '50%',
@@ -29,36 +11,12 @@ const formStyle = {
   padding: '1rem' ,
   marginLeft: 'auto',
   marginRight: 'auto',
-  // top:"50%",
-  // left: 'auto',
-  // right: 'auto',
-  // position:'absolute',
-  // align: "middle"
   marginTop: '10%',
-  // marginBottom: '50%',
-  // display: 'flex',
-  // justifyContent: "center"
-  // justify: "center",
-  // top: "200px",
-
 };
 
-
-
-import React, { Component, useState } from 'react'
-
 export default function Transfer(props) {
-  // const {state} = useLocation();
-  // // const state = location.state;
-  // // const { state } = props.location
-  // console.log(state);
-  // const [form] = Form.useForm();
-
   const location = useLocation()
   const state  = location.state
-  // console.log(location);
-  // console.log(props.location.propsSearch);
-
   const [listFriends] = useState(jQuery.map(props.friends, function (item) { 
                return {
                  value : item.identifier,
@@ -66,84 +24,75 @@ export default function Transfer(props) {
                }; 
              }))
   const [identifier, setIdentifier] = useState(state ? (state.identifier? [state.identifier] : null) : null)
-  const [sum, setSum] = useState(state ? (state.sum? (state.sum) : 0) : 0)
+  const [sum, setSum] = useState(state ? (state.sum? (state.sum) : 0) : null)
 
   const onFinish = () => {
-    // alert(this.props.location.query)
-    if(identifier)
-      if (sum)
-        props.transfer(identifier, sum)
-      else
-      alert("Введите cумму!")
-    else
-      alert("Выберите получателя!")
-      // this.props.transfer(this.state.identifier, this.state.sum)
-      // setIdentifier(null)
-      // setSum(0)
-      // form.resetFields();
+    props.transfer(identifier, sum)
   }
 
   const reset = () => {
     setIdentifier(null)
     setSum(0)
-    // form.resetFields();
-    // alert("elfktyj")
   }
   return (
     <Form 
-        // form={form}
         onFinish={onFinish}
-        layout="vertical"
-        
+        layout="vertical"      
         style = {formStyle}
-
-        // autoComplete="off"
-        // initialValues={{
-        //   remember: true,
-        // }}
-        // form = {this.state.myform}
-
       >
-        <Form.Item label="Получатель">
-          <Select 
-            
+        <Form.Item 
+          label="Получатель"
+          name="identifiers"
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуйста, выберите/ведите идентификатор!',
+            },
+          ]}
+        >
+          <Select             
           mode="tags"
-          // maxTagCount = {1}
             onChange={value => {
               setIdentifier(value)
             }}
             placeholder="Выберите из списка или введите идентификатор" 
             options={listFriends} 
             style={{width: '100%'}}
-            // defaultValue={identifier}  
             value={identifier}  
           />
         </Form.Item>
-        <Form.Item label="Сумма">
+
+        <Form.Item 
+          label="Сумма"
+          name="sum"
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуйста, введите сумму!',
+            },
+          ]}
+        >
           <InputNumber
             style={{width: '100%'}}
             // defaultValue="0"
             placeholder="0.00" 
-            min="0"
+            min="0.01"
             step="0.01"
             onChange={value => {
               setSum(value)
-            }} 
-            // defaultValue={sum}      
+            }}    
             value={sum}    
           />
         </Form.Item>
         <Form.Item >
-        <Space>
-        <Button type="primary" htmlType="submit">
-              Перевести
-        </Button>
-        <Button 
-          onClick={reset}
-        >
-              Oтмена
-        </Button>
-        </Space>
+          <Space>
+            <Button type="primary" htmlType="submit">
+                  Перевести
+            </Button>
+            <Button onClick={reset}>
+                  Oтмена
+            </Button>
+          </Space>
         </Form.Item>
       </Form>
   )
