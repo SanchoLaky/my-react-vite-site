@@ -1,20 +1,22 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import React, { Component } from 'react'
+
+import { Layout } from 'antd';
+
 import Transfer from './Pages/Transfer';
 import History from './Pages/History';
 import Friends from './Pages/Friends';
-import { Layout } from 'antd';
+
 import AppHeader from './components/layout/AppHeader';
+import AppSider from './components/layout/AppSider';
+import AppContent from './components/layout/AppContent';
 
 import dateFriends from './date/DateFriends.json'
 import datePeople from './date/DatePeople.json'
 import dateProfile from './date/DateProfile.json'
 import dateHistory from './date/DateHistory.json'
 
-
-import React, { Component } from 'react'
-// import AppSider from './components/layout/AppSider';
-import AppSider from './components/layout/AppSider';
-import AppContent from './components/layout/AppContent';
 
 export default class App extends Component {
   constructor(props) {
@@ -31,127 +33,107 @@ export default class App extends Component {
   this.addFriend = this.addFriend.bind(this)
   this.deleteFriend = this.deleteFriend.bind(this)
   }
+  checkPeopleList(identifier)
+  {
+    for (let i = 0; i < this.state.people.length; i++)
+      if (this.state.people[i].identifier == identifier){
+        return this.state.people[i]
+        }
+    return null
+  }
+
+  checkFriendList(identifier)
+  {
+    for (let i = 0; i < this.state.friends.length; i++)
+      if (this.state.friends[i].identifier == identifier){
+        return this.state.friends[i]
+        }
+    return null
+  }
+
+  addHistory(identifier, recipient, sum)
+  {
+    this.state.history.unshift({
+      key: this.state.history.length + 1,
+      recipient: recipient,
+      identifier: identifier,
+      date: (new Date()).toLocaleDateString(),
+      sum: sum
+    })
+  }
 
   newTransfer(identifiers, sum){
-    let totalSum = identifiers.length*sum;
-    // alert(totalSum);
-    if (totalSum>this.state.profile.sum)
+    for (let i = 0; i < identifiers.length; i++)
+      if (identifiers[i]==this.state.profile.identifier)
+      {
+        let total = ("Пожалуйста, уберите свой идентификатор (" +this.state.profile.identifier +") из списка получателей!" )
+        alert(total)
+        return
+      }
+    if (identifiers.length*sum>this.state.profile.sum){
       alert("Недостаточно средств для перевода");
-    else{
-      var correctRecipients = [];
-      var errorRecipients = [];
-      for (let i = 0; i < identifiers.length; i++) {
-        for (let j = 0; j < this.state.people.length; j++)
-          if (this.state.people[j].identifier == identifiers[i]){
-            correctRecipients.push({
-              recipient: this.state.people[j].recipient,
-              identifier: identifiers[i]
-            })
-            break;
-          }
-        if (correctRecipients.length!= i+1)
-          errorRecipients.push(identifiers[i])
-      }
-      console.log({correctRecipients, errorRecipients})
-      if (errorRecipients.length>0)
-      {
-        let total = ("Ошибка! Следующие идентификаторы не найдены в системе: " + errorRecipients);
-        alert(total);
-      }
-      else
-      {
-        let stringRecipients =""
-        for (let i = 0; i < correctRecipients.length; i++)
-          stringRecipients += correctRecipients[i].recipient + '(' + correctRecipients[i].identifier + ') '
-        // const result = correctRecipients.map(Object.entries).flat(2).join('_');
-        let total = ("Вы подтверждаете перевод на общую сумму " +sum*correctRecipients.length + " следующим людям " + stringRecipients + "?");
-        let transfer = confirm(total);
-        if (transfer)
-        {
-          let date = (new Date()).toLocaleDateString();
-          for (let i = 0; i < correctRecipients.length; i++)
-            if (correctRecipients[i].identifier != this.state.profile.identifier){
-              this.state.history.unshift({
-                key: this.state.history.length + i + 1,
-                recipient: correctRecipients[i].recipient,
-                identifier: correctRecipients[i].identifier,
-                date: date,
-                sum: sum
-              });
-              this.state.profile = {
-                recipient:  this.state.profile.recipient,
-                identifier: this.state.profile.identifier,
-                img: this.state.profile.img,
-                sum: this.state.profile.sum - sum
-              }
-              this.setState({profile: this.state.profile})
-              // this.state.profile.sum = this.state.profile.sum - sum;
-              console.log(this.state.profile.sum);
-            }
-          alert ('Средства успешно переведены')
-        }else alert ('Отмена перевода')
-      }
+      return
     }
-    let date = (new Date()).toLocaleDateString();
-    // let total = ("Получатель: " + identifier + " сумма: "+ sum + " дата"+ date);
-    // alert(total);
-    // // alert({identifier, sum})
-    console.log({identifiers, sum,date})
-    // this.state.history.unshift(
-    //   {
-    //     key: 549,
-    //     recipient: "Новый получатель",
-    //     identifier: identifier,
-    //     date: date,
-    //     sum: sum
-    //   }
-    // )
+
+    let correctRecipients = [];
+    let errorRecipients = [];
+    for (let i = 0; i < identifiers.length; i++){
+      let recipient = this.checkPeopleList(identifiers[i])
+      if (recipient)
+        correctRecipients.push(recipient)
+      else
+        errorRecipients.push(identifiers[i])
+    }
+    if (errorRecipients.length>0)
+    {
+      let total = ("Ошибка! Следующие идентификаторы не найдены в системе: " + errorRecipients)
+      alert(total)
+      return
+    }
+    let stringRecipients =""
+    for (let i = 0; i < correctRecipients.length; i++)
+      stringRecipients += correctRecipients[i].recipient + '(' + correctRecipients[i].identifier + ') '
+    let total = ("Вы подтверждаете перевод на общую сумму " +sum*correctRecipients.length + " следующим людям " + stringRecipients + "?");
+    let transfer = confirm(total);
+    
+    if (!transfer){
+      alert ('Отмена перевода')
+      return
+    }
+
+    for (let i = 0; i < correctRecipients.length; i++){
+      this.addHistory(correctRecipients[i].identifier, correctRecipients[i].recipient, sum)
+      this.state.profile.sum -= sum
+      console.log(this.state.profile.sum)
+    }
+    this.setState({profile: this.state.profile})
+    alert ('Средства успешно переведены')
+
   }
 
   addFriend(identifier){
-    // alert(identifier)
-    console.log(identifier)
-    if (identifier == this.state.profile.identifier)
+    if (identifier == this.state.profile.identifier){
       alert("Нельзя добавить в список друзей самого себя")
-    else
-    {
-      let newFritnd = null
-      for (let i = 0; i < this.state.people.length; i++)
-        if (this.state.people[i].identifier == identifier)
-        {
-          newFritnd = this.state.people[i];
-          break;
-        }
-      console.log(newFritnd);
-      if (newFritnd)
-      {
-        for (let i = 0; i < this.state.friends.length; i++)
-          if (this.state.friends[i].identifier == identifier)
-          {
-            newFritnd = null;
-            break;
-          }
-        console.log(newFritnd);
-        if (newFritnd)
-        {
-          this.state.friends.unshift(newFritnd);
-          this.setState({friends: this.state.friends})
-          console.log(this.state.friends)
-          alert("Поздравляем! Вы добавили в свой список друзей нового человека")
-        }
-        else
-        {
-          let total = ("Внимание! Человек с идентификатором " + identifier+ " уже добавлен к вам в друзья");
-          alert(total)
-        }
-      }
-      else
-      {
-        let total = ("Ошибка! Идентификатор " + identifier+ " НЕ НАЙДЕН!");
-        alert(total)
-      }
-
+      return
     }
+
+    if (this.checkFriendList(identifier))
+    {
+      let total = ("Внимание! Человек с идентификатором " + identifier+ " уже добавлен к вам в друзья")
+      alert(total)
+      return
+    }
+
+    let newFritnd = this.checkPeopleList(identifier)
+    if (!newFritnd){
+      let total = ("Ошибка! Идентификатор " + identifier+ " НЕ НАЙДЕН!");
+      alert(total)
+      return
+    }
+
+    this.state.friends.unshift(newFritnd);
+    this.setState({friends: this.state.friends})
+    alert("Поздравляем! Вы добавили в свой список друзей нового человека")
   }
 
   deleteFriend(identifier)
@@ -193,44 +175,3 @@ export default class App extends Component {
     )
   }
 }
-
-
-
-// export default  function App(){
-//   return  (   
-//     <>
-//     {/* <Transfer/> */}
-
-
-//       {/* <AppSider page = "friends"/>
-//       <AppContent content = {contentInformation}/>
-//     </Layout>
-//   </Layout> */}
-
-//   <Layout>
-//   <AppHeader />
-  
-//     <Router>
-//              <Routes>
-//                  <Route path="/" element={<Transfer/>}/>   
-//                  <Route path="/history" element={<History />}/>
-//                  <Route path="/friends" element={<Friends/>}/>
-//              </Routes>
-//     </Router>
-//     </Layout>
-//     {/* <Router>
-//        <Routes>
-//          <Route path='/' element={<Transfer/>} />
-//        </Routes>
-//      </Router> */}
-
-//      {/* <Layout>
-//        <AppHeader />
-//        <Layout>
-//          <AppSider/>
-//          <AppContent/>
-//        </Layout>
-//      </Layout> */}
-//     </>
-//   )
-// }
