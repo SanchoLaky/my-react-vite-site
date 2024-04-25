@@ -4,14 +4,14 @@ import {Link} from "react-router-dom";
 
 import { Space, Table} from 'antd';
 
-import '../styles/History.css'
-
-
 const columns = [
   {
     title: 'Получатель',
-    dataIndex: 'recipient',
     key: 'recipient',
+    render: (_, record) => (
+      <>{record.recipient}({record.identifier})</>
+    )
+
   },
   {
     title: 'Дата',
@@ -29,9 +29,9 @@ const columns = [
   {
     title: 'Действие',
     key: 'action',
-    render: (_, records) => (
+    render: (_, record) => (
       <Space size="middle">
-        <Link to="/" state={{ identifier: records.identifier ,sum: records.sum}} >Повторить</Link>
+        <Link to="/" state={{ identifier: record.identifier ,sum: record.sum}} >Повторить</Link>
       </Space>
     ),
   },
@@ -39,7 +39,7 @@ const columns = [
 
 export default function History(props) {
   return (
-    <form className='history'>
+    <div style={{margin: "20px 10%"}}>
     <Table
         scroll={{
            y: '70vh',
@@ -48,6 +48,6 @@ export default function History(props) {
         dataSource={props.history}
         size="small" 
     />
-    </form>
+    </div>
   )
 }

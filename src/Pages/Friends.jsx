@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom';
 
 import { Button, Form, Input, Space, Table} from 'antd';
 import { SmileOutlined} from '@ant-design/icons';
 
-import '../styles/Friends.css'
+import './styles/Avatar.css'
 
 
 export default function Friends(props) {
@@ -14,9 +14,7 @@ export default function Friends(props) {
       key: 'img',
       render ({img}) 
       {
-        return img ? <img className='avatar'
-        src={img}
-        /> : <SmileOutlined className='avatarIcon'/>
+        return img ? <img className='avatar'src={img}/> : <SmileOutlined className='icon'/>
       }
     },
    
@@ -49,8 +47,8 @@ export default function Friends(props) {
   }
 
   return (
-    <div key={props.friends} className='friends'>
-      <Table className='table'
+    <div key={props.friends} style={{margin: "20px 5%"}}>
+      <Table
         scroll={{
           y: '50vh',
         }} 
@@ -58,8 +56,7 @@ export default function Friends(props) {
         dataSource={props.friends} 
         size="small"
       />
-      <Form
-        onFinish={onFinish}>
+      <Form onFinish={onFinish}>
         <Space>
         <Form.Item
           name="identifier"

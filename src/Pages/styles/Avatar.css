@@ -3,10 +3,7 @@
     height: 30px;
     border-radius: 50%;
 }
-.avatarIcon {
-    font-size: 30px;
-}
 
-.friends{
-    margin: 20px 5%
+.icon {
+    font-size: 30px;
 }

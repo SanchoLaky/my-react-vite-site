@@ -1,37 +1,44 @@
 import { Layout } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 
-import '../../styles/AppSider.css'
-
 const siderStyle = {
     textAlign: 'center',
     color: '#23336D',
     backgroundColor: '#F0F5FF',
   };
 
+const partSiderStyle = {
+    height:  '50%',
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+  };
+
 export default function AppSider(props) {
     let location = useLocation();
     return(
         <Layout.Sider width="25%" style={siderStyle} >
-            <form className='sider'>
-            <p className='sum'>{props.sum.toFixed(2)}</p>
-            <p>Остаток средств</p>
-            </form>
-            <form className='sider menu'>
+            <div style={partSiderStyle}>
+                <p style={{fontSize: 'xx-large'}}>
+                    {props.sum.toFixed(2)}
+                </p>
+                <p>Остаток средств</p>
+            </div>
+            <div style={{...partSiderStyle, ...{fontSize: 'large'}}}>
                 <nav>
                     <ul>
-                        <li className = {location.pathname == "/" ? 'selected' : ''}>
+                        <li style = {location.pathname == "/" ? {fontWeight: 'bold'} : {}}>
                             <Link to="/" >Перевести</Link>
                         </li>
-                        <li className = {location.pathname == "/history" ? 'selected' : ''}>
+                        <li style = {location.pathname == "/history" ? {fontWeight: 'bold'} : {}}>
                             <Link to = "/history">История операций</Link>
                         </li>
-                        <li className = {location.pathname == "/friends" ? 'selected' : ''}>
+                        <li style = {location.pathname == "/friends" ? {fontWeight: 'bold'} : {}}>
                             <Link to = "/friends">Список друзей</Link>
                         </li>
                     </ul>
                 </nav>
-            </form>
+            </div>
         </Layout.Sider>
     ) 
 }
