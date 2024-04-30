@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 
 import { Layout } from 'antd';
 
@@ -17,44 +17,32 @@ import datePeople from './date/DatePeople.json'
 import dateProfile from './date/DateProfile.json'
 import dateHistory from './date/DateHistory.json'
 
+export default function App() {
+  const [friends, setFriends] = useState(dateFriends)
+  const [people] = useState(datePeople)
+  const [profile] = useState(dateProfile)
+  const [history] = useState(dateHistory)
+  const [sumProfile, setSumProfile] = useState(dateProfile.sum)
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      friends: dateFriends,
-      people: datePeople,
-      profile: dateProfile,
-      history: dateHistory,
-      page: window.location.pathname
-    }
-  this.newTransfer = this.newTransfer.bind(this)
-  this.addFriend = this.addFriend.bind(this)
-  this.deleteFriend = this.deleteFriend.bind(this)
-  }
-  checkPeopleList(identifier)
-  {
-    for (let i = 0; i < this.state.people.length; i++)
-      if (this.state.people[i].identifier == identifier){
-        return this.state.people[i]
+  const checkPeopleList = (identifier) => {
+    for (let i = 0; i < people.length; i++)
+      if (people[i].identifier == identifier){
+        return people[i]
         }
     return null
   }
 
-  checkFriendList(identifier)
-  {
-    for (let i = 0; i < this.state.friends.length; i++)
-      if (this.state.friends[i].identifier == identifier){
-        return this.state.friends[i]
+  const checkFriendList = (identifier) => {
+    for (let i = 0; i < friends.length; i++)
+      if (friends[i].identifier == identifier){
+        return friends[i]
         }
     return null
   }
 
-  addHistory(identifier, recipient, sum)
-  {
-    this.state.history.unshift({
-      key: this.state.history.length + 1,
+  const addHistory = (identifier, recipient, sum) => {
+    history.unshift({
+      key: history.length + 1,
       recipient: recipient,
       identifier: identifier,
       date: (new Date()).toLocaleDateString(),
@@ -62,15 +50,15 @@ export default class App extends Component {
     })
   }
 
-  newTransfer(identifiers, sum){
+  const newTransfer = (identifiers, sum) => {
     for (let i = 0; i < identifiers.length; i++)
-      if (identifiers[i]==this.state.profile.identifier)
+      if (identifiers[i]==profile.identifier)
       {
-        let total = ("Пожалуйста, уберите свой идентификатор (" +this.state.profile.identifier +") из списка получателей!" )
+        let total = ("Пожалуйста, уберите свой идентификатор (" +profile.identifier +") из списка получателей!" )
         alert(total)
         return
       }
-    if (identifiers.length*sum>this.state.profile.sum){
+    if (identifiers.length*sum>profile.sum){
       alert("Недостаточно средств для перевода");
       return
     }
@@ -78,7 +66,7 @@ export default class App extends Component {
     let correctRecipients = [];
     let errorRecipients = [];
     for (let i = 0; i < identifiers.length; i++){
-      let recipient = this.checkPeopleList(identifiers[i])
+      let recipient = checkPeopleList(identifiers[i])
       if (recipient)
         correctRecipients.push(recipient)
       else
@@ -102,76 +90,71 @@ export default class App extends Component {
     }
 
     for (let i = 0; i < correctRecipients.length; i++){
-      this.addHistory(correctRecipients[i].identifier, correctRecipients[i].recipient, sum)
-      this.state.profile.sum -= sum
-      console.log(this.state.profile.sum)
+      addHistory(correctRecipients[i].identifier, correctRecipients[i].recipient, sum)
     }
-    this.setState({profile: this.state.profile})
+    setSumProfile(sumProfile - sum*correctRecipients.length)
     alert ('Средства успешно переведены')
 
   }
 
-  addFriend(identifier){
-    if (identifier == this.state.profile.identifier){
+  const addFriend = (identifier) => {
+    if (identifier == profile.identifier){
       alert("Нельзя добавить в список друзей самого себя")
       return
     }
 
-    if (this.checkFriendList(identifier))
+    if (checkFriendList(identifier))
     {
       let total = ("Внимание! Человек с идентификатором " + identifier+ " уже добавлен к вам в друзья")
       alert(total)
       return
     }
 
-    let newFritnd = this.checkPeopleList(identifier)
+    let newFritnd = checkPeopleList(identifier)
     if (!newFritnd){
       let total = ("Ошибка! Идентификатор " + identifier+ " НЕ НАЙДЕН!");
       alert(total)
       return
     }
-
-    this.state.friends.unshift(newFritnd);
-    this.setState({friends: this.state.friends})
+    let newFriends = [...friends];
+    newFriends.unshift(newFritnd);
+    setFriends(newFriends)
     alert("Поздравляем! Вы добавили в свой список друзей нового человека")
   }
 
-  deleteFriend(identifier)
-  {
+  const deleteFriend = (identifier) =>{
 
     let index = -1;
-    for (let i = 0; i < this.state.friends.length; i++)
-      if (this.state.friends[i].identifier == identifier)
+    for (let i = 0; i < friends.length; i++)
+      if (friends[i].identifier == identifier)
       {
         index = i;
         break;
       }
-    let total = ("Вы действительно хотите удалить из друзей " + this.state.friends[index].recipient+ "(" + this.state.friends[index].identifier + ")?");
+    let total = ("Вы действительно хотите удалить из друзей " + friends[index].recipient+ "(" + friends[index].identifier + ")?");
     let deleteFriend = confirm(total);
     if (deleteFriend)
     {
-      this.state.friends.splice(index,1);
-      this.setState({friends: this.state.friends})
+      let newFriends = [...friends];
+      newFriends.splice(index,1);
+      setFriends(newFriends)
     }
   }
-
-  render() {
-    return (
-      <Router>
+  return (
+    <Router>
       <Layout>
-        <AppHeader profile = {this.state.profile} />
+        <AppHeader profile = {profile} />
         <Layout>
-          <AppSider page ={this.state.page} sum = {this.state.profile.sum} />
+          <AppSider sum = {sumProfile} />
           <AppContent content =
             {<Routes>
-              <Route path="/" element={<Transfer friends = {this.state.friends} transfer={this.newTransfer} />}/>   
-              <Route path="/history" element={<History history = {this.state.history} />}/>
-              <Route path="/friends" element={<Friends friends = {this.state.friends}  addFriend = {this.addFriend} deleteFriend = {this.deleteFriend}/>}/>
+              <Route path="/" element={<Transfer friends = {friends} transfer={newTransfer} />}/>   
+              <Route path="/history" element={<History history = {history} />}/>
+              <Route path="/friends" element={<Friends friends = {friends}  addFriend = {addFriend} deleteFriend = {deleteFriend}/>}/>
             </Routes>}
           />
         </Layout>
       </Layout>
       </Router>
-    )
-  }
+  )
 }
