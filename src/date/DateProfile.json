@@ -1,7 +1,6 @@
 {
-    "recipient": "John Brown",
-    "identifier": "34",
-    "img": "https://games.mail.ru/hotbox/content_files/gallery/2020/12/11/d49a024e7ade40858a10df3b8976625d.png",
-    "sum": 10000.00
+  "recipient": "John Brown",
+  "identifier": "34",
+  "img": "https://games.mail.ru/hotbox/content_files/gallery/2020/12/11/d49a024e7ade40858a10df3b8976625d.png",
+  "sum": 10000.0
 }
-
